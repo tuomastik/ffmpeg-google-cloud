@@ -1,0 +1,86 @@
+<html>
+
+<head>
+    <title>WebM to GIF/MP4 converter</title>
+</head>
+
+<body>
+<form method="post" id="fileinfo" name="fileinfo" enctype="multipart/form-data" onsubmit="return submitForm();">
+    <table>
+        <tr>
+            <td><p><b>Select WebM video</b></p></td>
+        </tr>
+        <tr>
+            <td><input id="file" name="file" type="file"/></td>
+        </tr>
+        <tr><td><p><br></p></td></tr>
+        <tr>
+            <td><p><b>Select output format</b></p></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="radio" id="gif" name="fmt" value="gif">
+                <label for="gif">GIF</label>
+                <input type="radio" id="mp4" name="fmt" value="mp4" checked="checked">
+                <label for="mp4">MP4</label>
+            </td>
+        </tr>
+        <tr><td><p><br></p></td></tr>
+        <tr>
+            <td><p><b>Select the width of the output video. Height will be adjusted automatically so that aspect ratio will be preserved.</b></p></td>
+        </tr>
+        <tr>
+            <td><input type="number" id="width" name="width" min="10" max="2000" value="500"></td>
+        </tr>
+        <tr><td><p><br></p></td></tr>
+        <tr>
+            <td><p><b>Select the quality of the MP4 output from range 0-51. Smaller number equals higher quality.</b></p></td>
+        </tr>
+        <tr>
+            <td><input type="number" id="crf" name="crf" min="0" max="51" value="23"></td>
+        </tr>
+        <tr><td><p><br></p></td></tr>
+        <tr>
+            <td>
+                <input type="submit" value="Submit"/>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+
+<script type="text/javascript">
+    function submitForm() {
+
+        console.log("submit event");
+
+        var formdata = new FormData();
+        var fileinput = document.querySelector('input[type="file"]');
+        if (fileinput.files.length == 0) {
+            alert("Select WebM file first");
+            return false;
+        }
+        formdata.append("file", fileinput.files[0]);
+        formdata.append("fmt", document.querySelector('input[name="fmt"]:checked').value);
+        formdata.append("crf", document.querySelector('input[name="crf"]').value);
+        formdata.append("width", document.querySelector('input[name="width"]').value);
+
+        var requestOptions = {
+            method: 'POST',
+            body: formdata,
+            redirect: 'follow',
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        };
+
+        fetch(window.location.href, requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+
+    }
+</script>
+
+
+</html>

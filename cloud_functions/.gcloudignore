@@ -1,0 +1,9 @@
+# Ignore everything by default
+*
+
+# Allow files explicitly
+!ffmpeg
+!main.py
+
+# Explicitly allow current dir. `gcloud deploy` fails without it.
+!.
