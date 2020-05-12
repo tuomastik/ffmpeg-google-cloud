@@ -75,8 +75,9 @@
 
         fetch(window.location.href, requestOptions)
             .then(response => response.text())
-            .then(result => console.log(result))
+            .then(return false;)
             .catch(error => console.log('error', error));
+
     }
 </script>
 
