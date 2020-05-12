@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<form method="post" id="fileinfo" name="fileinfo" enctype="multipart/form-data" onsubmit="return submitForm();">
+<form method="post" id="fileinfo" name="fileinfo" enctype="multipart/form-data" onsubmit="return submitForm(event);">
     <table>
         <tr>
             <td><p><b>Select WebM video</b></p></td>
@@ -54,9 +54,8 @@
 </body>
 
 <script type="text/javascript">
-    function submitForm() {
-
-        console.log("submit event");
+    function submitForm(event) {
+        event.preventDefault();
 
         var formdata = new FormData();
         var fileinput = document.querySelector('input[type="file"]');
@@ -71,18 +70,13 @@
 
         var requestOptions = {
             method: 'POST',
-            body: formdata,
-            redirect: 'follow',
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+            body: formdata
         };
 
         fetch(window.location.href, requestOptions)
-          .then(response => response.text())
-          .then(result => console.log(result))
-          .catch(error => console.log('error', error));
-
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     }
 </script>
 
